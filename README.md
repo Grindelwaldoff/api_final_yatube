@@ -52,6 +52,8 @@ python3 manage.py runserver
 
 ```
 ```
+Получение постов:
+
 ```
 GET /api/v1/posts/
 
@@ -66,4 +68,53 @@ Content-Type application/json
         {}
     ]
 }
+```
+
+Получение комментариев:
+
+```
+GET /api/v1/posts/{post_id}/comments/{id}/
+Content-Type application/json
+
+{
+    "id": 0,
+    "author": "string",
+    "text": "string",
+    "created": "2019-08-24T14:15:22Z",
+    "post": 0
+}
+```
+
+Список сообществ:
+
+```
+GET /api/v1/groups/
+Content-Type application/json
+
+[
+    {
+        "id": 0,
+        "title": "string",
+        "slug": "string",
+        "description": "string"
+    }
+]
+```
+
+Подписка:
+
+```
+POST /api/v1/follow/
+Content-Type application/json
+
+Request:
+    {
+        "following": "string"
+    }
+
+Response:
+    {
+        "user": "string",
+        "following": "string"
+    }
 ```
