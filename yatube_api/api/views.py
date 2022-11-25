@@ -1,7 +1,7 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework import permissions, filters
-from rest_framework.response import Response
+from rest_framework.mixins import ListModelMixin, CreateModelMixin
 from django.shortcuts import get_object_or_404
 
 from posts.models import Post, Group
@@ -37,19 +37,16 @@ class CommentsViewSet(viewsets.ModelViewSet):
         return post.comments.all()
 
 
-class GroupViewSet(viewsets.ModelViewSet):
+class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
 
-    def create(self, request, *args, **kwargs):
-        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
-
-class FollowViewSet(viewsets.ModelViewSet):
+class FollowViewSet(ListModelMixin, CreateModelMixin, viewsets.GenericViewSet):
     serializer_class = FollowSerializer
     permission_classes = (permissions.IsAuthenticated,)
     filter_backends = (filters.SearchFilter,)
-    search_fields = ('following__username',)
+    search_fields = ('=following__username',)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
