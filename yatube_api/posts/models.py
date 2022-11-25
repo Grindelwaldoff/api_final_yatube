@@ -40,6 +40,11 @@ class Follow(models.Model):
         verbose_name='Медиагигант:'
     )
 
+    class Meta:
+        models.UniqueConstraint(
+            fields=['user', 'following'],
+            name='unique_follow')
+
 
 class Post(models.Model):
     text = models.TextField()
