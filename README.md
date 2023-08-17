@@ -116,3 +116,7 @@ Response:
         "following": "string"
     }
 ```
+
+
+### Разработчик:
+Всеволод Рыбник tg: @Grindelwaldoff
